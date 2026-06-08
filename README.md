@@ -2,45 +2,45 @@
 
 An Interactive Romantic Proposal Website is a personalized web-based experience designed to create a memorable and emotional proposal journey. Instead of a traditional proposal message, the recipient is guided through multiple beautifully designed sections that tell a unique love story.
 
-Project Features
+<h2>Project Features</h2>
 
-1. Welcome Page
+<h3>1. Welcome Page</h3>
 
 - Attractive landing page with romantic animations and custom messages.
 - Smooth transitions that guide the user through the experience.
 
-2. Memory Gallery
+<h3>2. Memory Gallery</h3>
 
 - Personalized photo gallery showcasing special moments.
 - Animated photo frames and captions.
 
-3. Love Letter Section
+<h3>3. Love Letter Section</h3>
 
 - Custom love letters or messages presented with elegant animations.
 - Typewriter and reveal effects for emotional storytelling.
 
-4. Interactive Activities
+<h3>4. Interactive Activities</h3>
 
 - Mini-games, quizzes, or interactive elements related to the couple's journey.
 - Fun engagement features to keep the experience entertaining.
 
-5. Sticker & Emoji Interactions
+<h3>5. Sticker & Emoji Interactions</h3>
 
 - Animated stickers, emojis, hearts, and celebration effects.
 - User interactions trigger visual animations.
 
-6. Storytelling Experience
+<h3>6. Storytelling Experience</h3>
 
 - Multiple interconnected pages connected through smooth navigation.
 - Each section builds anticipation toward the final proposal.
 
-7. Final Proposal Page
+<h3>7. Final Proposal Page</h3>
 
 - Dedicated proposal screen with custom text and animations.
 - Interactive "Yes" and playful "No" button functionality.
 - Celebration effects such as confetti, fireworks, floating hearts, and special messages upon acceptance.
 
-Technical Stack
+<h2>Technical Stack</h2>
 
 - HTML5
 - CSS3
@@ -48,7 +48,7 @@ Technical Stack
 - Framer Motion (for advanced animations)
 - Responsive Design (Mobile, Tablet, Desktop)
 
-Deliverables
+<h2>Deliverables</h2>
 
 - Fully functional multi-page website.
 - Personalized content integration (photos, messages, memories).
@@ -56,6 +56,6 @@ Deliverables
 - Modern animations and interactive effects.
 - Easy deployment on hosting platforms.
 
-Purpose
+<h2>Purpose</h2>
 
 The objective of this project is to transform a traditional proposal into an engaging digital experience that combines storytelling, personalization, animations, and interactive elements to create a memorable and emotionally impactful moment.
