@@ -1409,6 +1409,11 @@ canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 0; }
   <span id="curtain-heart">💖</span>
 </div>
 
+<!-- Audio element for Bollywood BGM -->
+<audio id="bgm-audio" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <!-- Music button -->
 <button id="music-btn" title="Toggle music" aria-label="Toggle music">🎵</button>
 
@@ -1867,38 +1872,50 @@ function playCelebration() {
   [392, 494, 587].forEach((f, i) => playTone(f, 'triangle', 0.8, 0.08, 0.2 + i * 0.05));
 }
 
-// Ambient music (soft looping chord progression)
-let musicInterval = null;
-const CHORD_SEQUENCE = [
-  [261, 329, 392], [293, 369, 440],
-  [220, 277, 329], [261, 329, 392]
-];
-let chordIdx = 0;
-
+// Bollywood BGM (Humnava Mere Piano)
 function startMusic() {
-  if (musicInterval) return;
-  musicInterval = setInterval(() => {
-    const chord = CHORD_SEQUENCE[chordIdx % CHORD_SEQUENCE.length];
-    chord.forEach(f => playTone(f, 'sine', 1.8, 0.06));
-    chordIdx++;
-  }, 2000);
-  musicPlaying = true;
-}
-function stopMusic() {
-  if (musicInterval) { clearInterval(musicInterval); musicInterval = null; }
-  musicPlaying = false;
+  const audio = $('bgm-audio');
+  if (audio && audio.paused) {
+    audio.play().catch(e => console.log('Audio autoplay prevented by browser'));
+    musicPlaying = true;
+  }
 }
 
-$('music-btn').addEventListener('click', () => {
-  getAudioCtx(); // Resume on user interaction
-  if (musicPlaying) {
-    stopMusic();
-    $('music-btn').classList.remove('playing');
-    $('music-btn').textContent = '🎵';
-  } else {
+function stopMusic() {
+  const audio = $('bgm-audio');
+  if (audio && !audio.paused) {
+    audio.pause();
+    musicPlaying = false;
+  }
+}
+
+// Auto-play Bollywood BGM on page load
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
     startMusic();
     $('music-btn').classList.add('playing');
     $('music-btn').textContent = '🎶';
+  }, 1000);
+});
+
+// Update button state when audio plays/pauses
+const audio = document.getElementById('bgm-audio');
+if (audio) {
+  audio.addEventListener('play', () => {
+    $('music-btn').classList.add('playing');
+    $('music-btn').textContent = '🎶';
+  });
+  audio.addEventListener('pause', () => {
+    $('music-btn').classList.remove('playing');
+    $('music-btn').textContent = '🎵';
+  });
+}
+
+$('music-btn').addEventListener('click', () => {
+  if (musicPlaying) {
+    stopMusic();
+  } else {
+    startMusic();
   }
 });
 
