@@ -1410,7 +1410,7 @@ canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 0; }
 </div>
 
 <!-- Audio element for Bollywood BGM -->
-<audio id="bgm-audio" loop preload="auto" volume="0.5">
+<audio id="bgm-audio" loop preload="auto" autoplay muted>
   <source src="music.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
@@ -1880,6 +1880,8 @@ function startMusic() {
   const audio = $('bgm-audio');
   if (audio) {
     audio.volume = 0.5; // Set volume to 50%
+    audio.muted = false; // Unmute to hear the music
+    
     const playPromise = audio.play();
     
     if (playPromise !== undefined) {
@@ -1890,7 +1892,7 @@ function startMusic() {
           console.log('Music playing');
         })
         .catch(error => {
-          console.log('Autoplay prevented. Click music button to start:', error);
+          console.log('Autoplay prevented:', error);
         });
     }
   }
@@ -1904,10 +1906,21 @@ function stopMusic() {
   }
 }
 
-// Initialize audio on first user interaction (required for autoplay policy)
-document.addEventListener('click', () => {
-  if (!audioInitialized) {
+// Auto-play music on page load
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
     startMusic();
+    $('music-btn').classList.add('playing');
+    $('music-btn').textContent = '🎶';
+  }, 500);
+});
+
+// Unmute on first user interaction (for browser autoplay policies)
+document.addEventListener('click', () => {
+  const audio = $('bgm-audio');
+  if (audio && audio.muted) {
+    audio.muted = false;
+    console.log('Music unmuted');
   }
 }, { once: true });
 
@@ -1917,10 +1930,12 @@ if (audio) {
   audio.addEventListener('play', () => {
     $('music-btn').classList.add('playing');
     $('music-btn').textContent = '🎶';
+    musicPlaying = true;
   });
   audio.addEventListener('pause', () => {
     $('music-btn').classList.remove('playing');
     $('music-btn').textContent = '🎵';
+    musicPlaying = false;
   });
 }
 
