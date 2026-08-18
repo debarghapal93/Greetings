@@ -1909,8 +1909,18 @@ function stopMusic() {
   }
 }
 
-// Music plays only when user clicks the music button (no auto-play)
-// Users have full control to start/stop music anytime
+// Auto-play music on first user interaction (browser requirement)
+document.addEventListener('click', () => {
+  if (!audioInitialized) {
+    startMusic();
+  }
+}, { once: true });
+
+document.addEventListener('keydown', () => {
+  if (!audioInitialized) {
+    startMusic();
+  }
+}, { once: true });
 
 // Update button state when audio plays/pauses
 const audio = document.getElementById('bgm-audio');
