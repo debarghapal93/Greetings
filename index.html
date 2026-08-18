@@ -1909,14 +1909,8 @@ function stopMusic() {
   }
 }
 
-// Auto-play music on page load (no user interaction needed)
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    startMusic();
-    $('music-btn').classList.add('playing');
-    $('music-btn').textContent = '🎶';
-  }, 500);
-});
+// Music plays only when user clicks the music button
+// No auto-play - user has full control
 
 // Update button state when audio plays/pauses
 const audio = document.getElementById('bgm-audio');
