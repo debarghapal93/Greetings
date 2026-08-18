@@ -1410,8 +1410,9 @@ canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 0; }
 </div>
 
 <!-- Audio element for Bollywood BGM -->
-<audio id="bgm-audio" loop>
+<audio id="bgm-audio" loop preload="auto" volume="0.5">
   <source src="music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
 </audio>
 
 <!-- Music button -->
@@ -1873,11 +1874,25 @@ function playCelebration() {
 }
 
 // Bollywood BGM (Humnava Mere Piano)
+let audioInitialized = false;
+
 function startMusic() {
   const audio = $('bgm-audio');
-  if (audio && audio.paused) {
-    audio.play().catch(e => console.log('Audio autoplay prevented by browser'));
-    musicPlaying = true;
+  if (audio) {
+    audio.volume = 0.5; // Set volume to 50%
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          musicPlaying = true;
+          audioInitialized = true;
+          console.log('Music playing');
+        })
+        .catch(error => {
+          console.log('Autoplay prevented. Click music button to start:', error);
+        });
+    }
   }
 }
 
@@ -1889,14 +1904,12 @@ function stopMusic() {
   }
 }
 
-// Auto-play Bollywood BGM on page load
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
+// Initialize audio on first user interaction (required for autoplay policy)
+document.addEventListener('click', () => {
+  if (!audioInitialized) {
     startMusic();
-    $('music-btn').classList.add('playing');
-    $('music-btn').textContent = '🎶';
-  }, 1000);
-});
+  }
+}, { once: true });
 
 // Update button state when audio plays/pauses
 const audio = document.getElementById('bgm-audio');
